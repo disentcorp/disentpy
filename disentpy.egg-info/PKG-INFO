@@ -6,7 +6,4 @@ Home-page: git@github.com:rfschubert/ptolemaios-sdk-package.git
 Author: Niels lauritzen
 Author-email: niels.lauritzen@disent.com
 License: unlicense
-Platform: UNKNOWN
-
-UNKNOWN
-
+License-File: LICENSE.md

@@ -1,3 +1,4 @@
+LICENSE.md
 README.md
 setup.py
 disent/__init__.py
