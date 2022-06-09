@@ -23,8 +23,9 @@ df = disent.hub(model,model_args,env='disent-cloud')
 print(df)
 
 # get AAPL vol surface (pivoted on K)
-df = disent.hub(model,model_args,env='disent-cloud')
 model_args = {'ticker':ticker,'pivot':'T_DATE,K,IV'}
+df = disent.hub(model,model_args,env='disent-cloud')
+
 print(df)
 
 # lambdify disent call for any ticker
