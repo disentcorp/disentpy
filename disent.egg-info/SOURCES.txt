@@ -1,0 +1,8 @@
+README.md
+setup.py
+disent/__init__.py
+disent.egg-info/PKG-INFO
+disent.egg-info/SOURCES.txt
+disent.egg-info/dependency_links.txt
+disent.egg-info/not-zip-safe
+disent.egg-info/top_level.txt
