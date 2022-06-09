@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import os
 import urllib.parse as urllib_parse
+import io
 
 APIKEY_FILENAME = '~/.disent/apikey.json'
 
@@ -16,11 +17,24 @@ def disent(model,kwargs):
 			Exception('','')
 
 	def disent_get(protocol,hostname,port,endpoint,uri_dict):
+		apikey = input("Secrets file not found. See docs. Enter your API-Key to continue: ")
 		headers = {'Accept': 'application/json','Authorization': f'Api-Key {apikey}'}
 		uri_params = urllib_parse.urlencode(uri_dict)
 		url = f"{protocol}://{hostname}:{port}/{endpoint}?{uri_params}"
 		response = requests.request("GET", url, headers=headers)
-		d = json.loads(response.text)
+
+		from tqdm import tqdm
+		total_size_in_bytes= int(response.headers.get('content-length', 0))
+		block_size = 1024 #1 Kibibyte
+		progress_bar = tqdm(total=total_size_in_bytes, unit='iB', unit_scale=True)
+		
+		b = b''
+		for data in response.iter_content(block_size):
+			progress_bar.update(len(data))
+			b+= data
+		progress_bar.close()
+		txt = b.decode()
+		d = json.loads(txt)
 		result = d.get('result',None)
 		if result is None:
 			print(d)
