@@ -1,1 +1,1 @@
-from disent.src.disent import disent
+from disent.src.disent import *
