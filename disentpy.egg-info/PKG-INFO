@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: disentpy
-Version: 0.0.5
+Version: 0.0.6
 Summary: Disent API caller
 Home-page: https://github.com/disentcorp/disentpy
 Author: Niels lauritzen
@@ -33,8 +33,9 @@ df = disent.hub(model,model_args,env='disent-cloud')
 print(df)
 
 # get AAPL vol surface (pivoted on K)
-df = disent.hub(model,model_args,env='disent-cloud')
 model_args = {'ticker':ticker,'pivot':'T_DATE,K,IV'}
+df = disent.hub(model,model_args,env='disent-cloud')
+
 print(df)
 
 # lambdify disent call for any ticker
