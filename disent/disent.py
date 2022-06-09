@@ -1,15 +1,19 @@
-import requests
-import pandas as pd
-import json
+
+import io
 import os
 import urllib.parse as urllib_parse
-import io
+import json
+
 import time
 import threading
 
-APIKEY_FILENAME = '~/.disent/apikey.json'
+import requests
+import pandas as pd
+
+APIKEY_FILENAME = 'apikey.json'
 DEFAULT_ENV = 'prod'
-ENVS_FILENAME = 'envs.json'
+
+import disent.settings as settings
 
 
 def spinner(arg):
@@ -57,7 +61,7 @@ def disent_get(protocol,hostname_port,endpoint,uri_dict):
 
 def verify_secrets():
 	try:
-		apikey_filename_expanded = os.path.expanduser(APIKEY_FILENAME)
+		apikey_filename_expanded = os.path.join(os.path.expanduser('~'),'.disent',APIKEY_FILENAME)
 		with open(apikey_filename_expanded) as f:
 			try:
 				d = json.load(f)
@@ -83,10 +87,7 @@ def example(env='prod'):
 	return result
 
 def get_env_tuple(env):
-	path = os.path.dirname(__file__)
-	filename = os.path.join(path, ENVS_FILENAME)
-	f = open(filename)
-	d = json.load(f)
+	d = settings.ENVS
 	result = d[env]
 	return result
 
