@@ -4,6 +4,7 @@ setup(
     name='disentpy',
     version='0.0.1',
     description='Disent API caller',
+    long_description_content_type='text/markdown',
     url='https://github.com/disentcorp/disentpy',
     author='Niels lauritzen',
     author_email='niels.lauritzen@disent.com',
