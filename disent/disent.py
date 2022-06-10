@@ -60,9 +60,13 @@ def disent_get(protocol,hostname_port,endpoint,uri_dict):
 		return df
 
 def verify_secrets():
-	apikey_filename_expanded = os.path.join(os.path.expanduser('~'),'.disent',APIKEY_FILENAME)
+	dir = os.path.join(os.path.expanduser('~'),'.disent')
+	if not os.path.isdir(dir):
+		os.makedirs(dir, exist_ok=True)
+	filename = os.path.join(dir,APIKEY_FILENAME)
+
 	try:
-		with open(apikey_filename_expanded) as f:
+		with open(filename) as f:
 			try:
 				d = json.load(f)
 				apikey = d.get('Api-Key',None)
@@ -75,7 +79,7 @@ def verify_secrets():
 		print('Secrets file not found. See docs.')
 		apikey = input("Enter your API-Key to continue: ")
 		d = {'Api-Key':apikey}
-		with open(apikey_filename_expanded,'w') as f:
+		with open(filename,'w') as f:
 			json.dump(d,f)
 	
 	return apikey
