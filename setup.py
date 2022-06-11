@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='disentpy',
-    version='0.0.18',
+    version='0.0.19',
     description='Disent API caller',
     long_description=long_description,
     long_description_content_type='text/markdown',

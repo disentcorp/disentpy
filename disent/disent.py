@@ -14,13 +14,14 @@ import pandas as pd
 APIKEY_FILENAME = 'apikey.json'
 
 from . import settings
-from . import environments
+from . import env
 from . import spinner
 
-def disent_get(uri_front,endpoint,uri_dict):
+def disent_get(endpoint,uri_dict):
 		apikey = verify_secrets()
 		headers = {'Accept': 'application/json','Authorization': f'Api-Key {apikey}'}
 		uri_params = urllib_parse.urlencode(uri_dict)
+		uri_front = env.get_uri_left()
 		url = f"{uri_front}/{endpoint}?{uri_params}"
 		
 		response = None
@@ -80,19 +81,17 @@ def example():
 	return result
 
 def disent(model,kwargs):
-	uri_front = environments.get_uri_left()
 	models = {
 		'cache':'api/cache'
 	}
 	model_endpoint = models[model]
-	result =  disent_get(uri_front,model_endpoint,kwargs)
+	result =  disent_get(model_endpoint,kwargs)
 	return result
 
 def hub(model,kwargs,):
-	uri_front = environments.get_uri_left()
 	kwargs['source']=model
 	model_endpoint='api/cache'
-	result =  disent_get(uri_front,model_endpoint,kwargs)
+	result =  disent_get(model_endpoint,kwargs)
 	return result
 
 

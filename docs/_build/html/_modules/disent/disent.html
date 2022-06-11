@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>disent.disent &mdash; Disent Client for Python3 0.0.19 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Disent Client for Python3
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Disent Client for Python3</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>disent.disent</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for disent.disent</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">urllib.parse</span> <span class="k">as</span> <span class="nn">urllib_parse</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">APIKEY_FILENAME</span> <span class="o">=</span> <span class="s1">&#39;apikey.json&#39;</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">env</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">spinner</span>
+
+<div class="viewcode-block" id="disent_get"><a class="viewcode-back" href="../../source/disent.html#disent.disent.disent_get">[docs]</a><span class="k">def</span> <span class="nf">disent_get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span><span class="n">uri_dict</span><span class="p">):</span>
+		<span class="n">apikey</span> <span class="o">=</span> <span class="n">verify_secrets</span><span class="p">()</span>
+		<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span><span class="s1">&#39;Authorization&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Api-Key </span><span class="si">{</span><span class="n">apikey</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">}</span>
+		<span class="n">uri_params</span> <span class="o">=</span> <span class="n">urllib_parse</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">uri_dict</span><span class="p">)</span>
+		<span class="n">uri_front</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">get_uri_left</span><span class="p">()</span>
+		<span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uri_front</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">endpoint</span><span class="si">}</span><span class="s2">?</span><span class="si">{</span><span class="n">uri_params</span><span class="si">}</span><span class="s2">&quot;</span>
+		
+		<span class="n">response</span> <span class="o">=</span> <span class="kc">None</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">spinner</span><span class="o">.</span><span class="n">bouncing_ball</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,))</span>
+			<span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+			<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+			<span class="n">t</span><span class="o">.</span><span class="n">do_run</span> <span class="o">=</span> <span class="kc">False</span>		
+		<span class="k">except</span> <span class="p">(</span><span class="ne">KeyboardInterrupt</span><span class="p">,</span><span class="ne">SystemExit</span><span class="p">,</span><span class="ne">Exception</span><span class="p">):</span>
+			<span class="n">t</span><span class="o">.</span><span class="n">do_run</span> <span class="o">=</span> <span class="kc">False</span>	
+			<span class="k">raise</span>
+		
+		<span class="k">if</span> <span class="n">response</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reponse not found.&#39;</span><span class="p">)</span>
+
+		<span class="n">total_size_in_bytes</span><span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;content-length&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="mi">1024</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Downloaded........&#39;</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">total_size_in_bytes</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2"> KiB done.                &quot;</span><span class="p">)</span>
+
+		<span class="n">txt</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+		
+		<span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+		<span class="n">result</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;result&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Server error&#39;</span><span class="p">,</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Exception&#39;</span><span class="p">])</span>
+			
+		<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">df</span></div>
+
+<div class="viewcode-block" id="verify_secrets"><a class="viewcode-back" href="../../source/disent.html#disent.disent.verify_secrets">[docs]</a><span class="k">def</span> <span class="nf">verify_secrets</span><span class="p">():</span>
+	<span class="nb">dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">),</span><span class="s1">&#39;.disent&#39;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span><span class="n">APIKEY_FILENAME</span><span class="p">)</span>
+
+	<span class="k">try</span><span class="p">:</span>
+		<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="n">d</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+				<span class="n">apikey</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Api-Key&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+				<span class="k">if</span> <span class="n">apikey</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+					<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span><span class="s1">&#39;Secrets file is missing Api-Key.&#39;</span><span class="p">)</span>
+			<span class="k">except</span><span class="p">:</span>
+				<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span><span class="s1">&#39;Secrets file is invalid.&#39;</span><span class="p">)</span>
+				
+	<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Secrets file not found. See docs.&#39;</span><span class="p">)</span>
+		<span class="n">apikey</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter your API-Key to continue: &quot;</span><span class="p">)</span>
+		<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Api-Key&#39;</span><span class="p">:</span><span class="n">apikey</span><span class="p">}</span>
+		<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+			<span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+	
+	<span class="k">return</span> <span class="n">apikey</span></div>
+
+<div class="viewcode-block" id="example"><a class="viewcode-back" href="../../source/disent.html#disent.disent.example">[docs]</a><span class="k">def</span> <span class="nf">example</span><span class="p">():</span>
+	<span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;source&#39;</span><span class="p">:</span><span class="s1">&#39;BSPLINE_MODEL&#39;</span><span class="p">,</span><span class="s1">&#39;ticker&#39;</span><span class="p">:</span><span class="s1">&#39;AAPL&#39;</span><span class="p">}</span>
+	<span class="n">result</span> <span class="o">=</span> <span class="n">disent</span><span class="p">(</span><span class="s1">&#39;cache&#39;</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="disent"><a class="viewcode-back" href="../../source/disent.html#disent.disent.disent">[docs]</a><span class="k">def</span> <span class="nf">disent</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">kwargs</span><span class="p">):</span>
+	<span class="n">models</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s1">&#39;cache&#39;</span><span class="p">:</span><span class="s1">&#39;api/cache&#39;</span>
+	<span class="p">}</span>
+	<span class="n">model_endpoint</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="n">model</span><span class="p">]</span>
+	<span class="n">result</span> <span class="o">=</span>  <span class="n">disent_get</span><span class="p">(</span><span class="n">model_endpoint</span><span class="p">,</span><span class="n">kwargs</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="hub"><a class="viewcode-back" href="../../source/disent.html#disent.disent.hub">[docs]</a><span class="k">def</span> <span class="nf">hub</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">kwargs</span><span class="p">,):</span>
+	<span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">model</span>
+	<span class="n">model_endpoint</span><span class="o">=</span><span class="s1">&#39;api/cache&#39;</span>
+	<span class="n">result</span> <span class="o">=</span>  <span class="n">disent_get</span><span class="p">(</span><span class="n">model_endpoint</span><span class="p">,</span><span class="n">kwargs</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="unit_test"><a class="viewcode-back" href="../../source/disent.html#disent.disent.unit_test">[docs]</a><span class="k">def</span> <span class="nf">unit_test</span><span class="p">():</span>
+	<span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="c1"># &quot;source&quot;:&quot;BSPLINE_MODEL&quot;,</span>
+		<span class="s2">&quot;source&quot;</span><span class="p">:</span><span class="s2">&quot;VOLS_ORATS&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;datastorekey&quot;</span><span class="p">:</span><span class="s2">&quot;:::snapshots:20220606:211511:market_data_snapshot&quot;</span><span class="p">,</span>
+		<span class="s2">&quot;ticker&quot;</span><span class="p">:</span><span class="s2">&quot;SPX&quot;</span><span class="p">,</span>
+		<span class="c1"># &quot;pivot&quot;:&quot;YRS,MNY,IV&quot;</span>
+	<span class="p">}</span>
+	<span class="n">df</span> <span class="o">=</span> <span class="n">disent</span><span class="p">(</span><span class="s1">&#39;cache&#39;</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+	<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="n">unit_test</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Anthony Malizzio.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

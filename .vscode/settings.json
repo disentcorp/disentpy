@@ -1,3 +1,4 @@
 {
-  "python.analysis.extraPaths": ["./disent"]
+  "python.analysis.extraPaths": ["./disent"],
+  "esbonio.sphinx.confDir": "${workspaceFolder}/docs"
 }

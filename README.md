@@ -19,18 +19,18 @@ import disent
 model="DEMO_EQD_VOLS"
 ticker = 'AAPL'
 model_args = {'ticker':ticker}
-df = disent.hub(model,model_args,env='disent-cloud')
+df = disent.hub(model,model_args)
 print(df)
 
 # get AAPL vol surface (pivoted on K)
 model_args = {'ticker':ticker,'pivot':'T_DATE,K,IV'}
-df = disent.hub(model,model_args,env='disent-cloud')
+df = disent.hub(model,model_args)
 
 print(df)
 
 # lambdify disent call for any ticker
 
-f_vols = lambda i: disent.hub(model,{'ticker':i},env='disent-cloud')
+f_vols = lambda i: disent.hub(model,{'ticker':i})
 print(f_vols('SPX'))
 print(f_vols('RTY'))
 
