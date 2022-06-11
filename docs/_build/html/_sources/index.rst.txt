@@ -33,31 +33,6 @@ Getting Started
 
 When using :code:`disent.example()` you'll get a :code:`pandas.DataFrame` from Disent's demo volatility surface for Apple on recent data from the public domain. This is a wrapper on :code:`disent.hub`.
 
-Environments
-==================
-
-Environment List
-------------------
-
-* public (default)
-
-List current environment
-------------------------
-
-.. code-block:: python3
-
-   >>> disent.env.get()
-   public
-
-Change (set) environment
-------------------------
-
-.. code-block:: python3
-
-   >>> disent.set.set('prod')
-   public --> prod
-
-
 Demo Functionality
 ==================
 
@@ -119,9 +94,9 @@ When using :code:`disent.hub()` you'll get a :code:`pandas.DataFrame`:
 
 .. _OCC: https://www.theocc.com/Market-Data/Market-Data-Reports/Series-and-Trading-Data/Directory-of-Listed-Products
   
-- :math:`\text{TCK}` are the option contract root symbols using standard exchange root codes (`OCC`_) root symbols`.
+- :math:`\text{TCK}` are the option contract root symbols using standard exchange root codes (`OCC`_) root symbols.
 
-- :math:`\text{MNY}` is defined as :math:`f(S,K) = \displaystyle\frac{K}{S}` bucketed into a pre-defined moneyness scale.
+- :math:`\text{MNY}` are defined as :math:`f(S,K) = \displaystyle\frac{K}{S}` bucketed into a pre-defined moneyness scale.
 
 - :math:`\text{T}` are rolling contract maturities, i.e. durations/tenors/time periods (akin to :code:`datetime.timedelta`), bucketed into a classic tenor scale:
 
@@ -139,9 +114,9 @@ Across the Disent platform rolling tenors include two helpers:
 
 .. _ISO8601: https://en.wikipedia.org/wiki/ISO_8601
 
-- :math:`\text{DT}` is are expressed as `ISO8601`_ strings as :math:`\text{ACT}` days from today. Use :code:`pandas.to_datetime()` for conversion.
+- :math:`\text{DT}` are expressed as `ISO8601`_ strings as :math:`\text{ACT}` days from today. Use :code:`pandas.to_datetime()` for conversion.
 
-- :math:`\text{YRS}` is the year fraction from today and DT using :math:`\text{ACT/365}` convention.
+- :math:`\text{YRS}` are the year fractions from today and :math:`\text{DT}` using :math:`\text{ACT/365}` convention.
 
 
 *Evalauted columns*
@@ -152,7 +127,29 @@ Across the Disent platform rolling tenors include two helpers:
 - :math:`\text{IV}` is the implied volatlity. It is derived using a Disent-specific implementation of `Black-Scholes-Merton`_ using `spline-based interpolation`_.
 
 
+Environments
+==================
 
+Environment List
+------------------
+
+* public (default)
+
+List current environment
+------------------------
+
+.. code-block:: python3
+
+   >>> disent.env.get()
+   public
+
+Change (set) environment
+------------------------
+
+.. code-block:: python3
+
+   >>> disent.set.set('prod')
+   public --> prod
 
 
 .. * :ref:`genindex`

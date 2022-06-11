@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1 Getting Started &mdash; Disent Client for Python3 0.0.19 documentation</title>
+  <title>1 Getting Started &mdash; Disent Client (disentpy) 0.0.19 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -27,7 +27,8 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> Disent Client for Python3
+            <a href="#">
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -40,14 +41,14 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#"><span class="sectnum">1 </span>Getting Started</a></li>
-<li><a class="reference internal" href="#environments"><span class="sectnum">2 </span>Environments</a><ul>
-<li><a class="reference internal" href="#environment-list"><span class="sectnum">2.1 </span>Environment List</a></li>
-<li><a class="reference internal" href="#list-current-environment"><span class="sectnum">2.2 </span>List current environment</a></li>
-<li><a class="reference internal" href="#change-set-environment"><span class="sectnum">2.3 </span>Change (set) environment</a></li>
+<li><a class="reference internal" href="#demo-functionality"><span class="sectnum">2 </span>Demo Functionality</a><ul>
+<li><a class="reference internal" href="#equity-volatility"><span class="sectnum">2.1 </span>Equity Volatility</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#demo-functionality"><span class="sectnum">3 </span>Demo Functionality</a><ul>
-<li><a class="reference internal" href="#equity-volatility"><span class="sectnum">3.1 </span>Equity Volatility</a></li>
+<li><a class="reference internal" href="#environments"><span class="sectnum">3 </span>Environments</a><ul>
+<li><a class="reference internal" href="#environment-list"><span class="sectnum">3.1 </span>Environment List</a></li>
+<li><a class="reference internal" href="#list-current-environment"><span class="sectnum">3.2 </span>List current environment</a></li>
+<li><a class="reference internal" href="#change-set-environment"><span class="sectnum">3.3 </span>Change (set) environment</a></li>
 </ul>
 </li>
 </ul>
@@ -58,7 +59,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Disent Client for Python3</a>
+          <a href="#">Disent Client (disentpy)</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -98,37 +99,14 @@
 </div>
 <p>When using <code class="code docutils literal notranslate"><span class="pre">disent.example()</span></code> you’ll get a <code class="code docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> from Disent’s demo volatility surface for Apple on recent data from the public domain. This is a wrapper on <code class="code docutils literal notranslate"><span class="pre">disent.hub</span></code>.</p>
 </section>
-<section id="environments">
-<h1><span class="sectnum">2 </span>Environments<a class="headerlink" href="#environments" title="Permalink to this heading">¶</a></h1>
-<section id="environment-list">
-<h2><span class="sectnum">2.1 </span>Environment List<a class="headerlink" href="#environment-list" title="Permalink to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>public (default)</p></li>
-</ul>
-</section>
-<section id="list-current-environment">
-<h2><span class="sectnum">2.2 </span>List current environment<a class="headerlink" href="#list-current-environment" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">disent</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-<span class="go">public</span>
-</pre></div>
-</div>
-</section>
-<section id="change-set-environment">
-<h2><span class="sectnum">2.3 </span>Change (set) environment<a class="headerlink" href="#change-set-environment" title="Permalink to this heading">¶</a></h2>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">disent</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;prod&#39;</span><span class="p">)</span>
-<span class="go">public --&gt; prod</span>
-</pre></div>
-</div>
-</section>
-</section>
 <section id="demo-functionality">
-<h1><span class="sectnum">3 </span>Demo Functionality<a class="headerlink" href="#demo-functionality" title="Permalink to this heading">¶</a></h1>
+<h1><span class="sectnum">2 </span>Demo Functionality<a class="headerlink" href="#demo-functionality" title="Permalink to this heading">¶</a></h1>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>Data is provided for demonstration purposes and sourced from the public domain.</p>
 </div>
 <section id="equity-volatility">
-<h2><span class="sectnum">3.1 </span>Equity Volatility<a class="headerlink" href="#equity-volatility" title="Permalink to this heading">¶</a></h2>
+<h2><span class="sectnum">2.1 </span>Equity Volatility<a class="headerlink" href="#equity-volatility" title="Permalink to this heading">¶</a></h2>
 <p>When using <code class="code docutils literal notranslate"><span class="pre">disent.hub()</span></code> you’ll get a <code class="code docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;DEMO_EQD_VOLS&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ticker</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
@@ -190,8 +168,8 @@
 </div>
 <p><em>Descriptive columns</em></p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{TCK}\)</span> are the option contract root symbols using standard exchange root codes (<a class="reference external" href="https://www.theocc.com/Market-Data/Market-Data-Reports/Series-and-Trading-Data/Directory-of-Listed-Products">OCC</a>) root symbols`.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{MNY}\)</span> is defined as <span class="math notranslate nohighlight">\(f(S,K) = \displaystyle\frac{K}{S}\)</span> bucketed into a pre-defined moneyness scale.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{TCK}\)</span> are the option contract root symbols using standard exchange root codes (<a class="reference external" href="https://www.theocc.com/Market-Data/Market-Data-Reports/Series-and-Trading-Data/Directory-of-Listed-Products">OCC</a>) root symbols.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{MNY}\)</span> are defined as <span class="math notranslate nohighlight">\(f(S,K) = \displaystyle\frac{K}{S}\)</span> bucketed into a pre-defined moneyness scale.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\text{T}\)</span> are rolling contract maturities, i.e. durations/tenors/time periods (akin to <code class="code docutils literal notranslate"><span class="pre">datetime.timedelta</span></code>), bucketed into a classic tenor scale:</p></li>
 </ul>
 <table class="docutils align-center">
@@ -207,13 +185,36 @@
 </table>
 <p>Across the Disent platform rolling tenors include two helpers:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{DT}\)</span> is are expressed as <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> strings as <span class="math notranslate nohighlight">\(\text{ACT}\)</span> days from today. Use <code class="code docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> for conversion.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{YRS}\)</span> is the year fraction from today and DT using <span class="math notranslate nohighlight">\(\text{ACT/365}\)</span> convention.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{DT}\)</span> are expressed as <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> strings as <span class="math notranslate nohighlight">\(\text{ACT}\)</span> days from today. Use <code class="code docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> for conversion.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{YRS}\)</span> are the year fractions from today and <span class="math notranslate nohighlight">\(\text{DT}\)</span> using <span class="math notranslate nohighlight">\(\text{ACT/365}\)</span> convention.</p></li>
 </ul>
 <p><em>Evalauted columns</em></p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\text{IV}\)</span> is the implied volatlity. It is derived using a Disent-specific implementation of <a class="reference external" href="https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model">Black-Scholes-Merton</a> using <a class="reference external" href="https://en.wikipedia.org/wiki/Spline_interpolation">spline-based interpolation</a>.</p></li>
 </ul>
+</section>
+</section>
+<section id="environments">
+<h1><span class="sectnum">3 </span>Environments<a class="headerlink" href="#environments" title="Permalink to this heading">¶</a></h1>
+<section id="environment-list">
+<h2><span class="sectnum">3.1 </span>Environment List<a class="headerlink" href="#environment-list" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>public (default)</p></li>
+</ul>
+</section>
+<section id="list-current-environment">
+<h2><span class="sectnum">3.2 </span>List current environment<a class="headerlink" href="#list-current-environment" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">disent</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">public</span>
+</pre></div>
+</div>
+</section>
+<section id="change-set-environment">
+<h2><span class="sectnum">3.3 </span>Change (set) environment<a class="headerlink" href="#change-set-environment" title="Permalink to this heading">¶</a></h2>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">disent</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;prod&#39;</span><span class="p">)</span>
+<span class="go">public --&gt; prod</span>
+</pre></div>
+</div>
 </section>
 </section>
 
