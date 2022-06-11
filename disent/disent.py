@@ -1,6 +1,7 @@
 
 import io
 import os
+import sys
 import urllib.parse as urllib_parse
 import json
 
@@ -11,44 +12,33 @@ import requests
 import pandas as pd
 
 APIKEY_FILENAME = 'apikey.json'
-DEFAULT_ENV = 'prod'
 
-import disent.settings as settings
+from . import settings
+from . import environments
+from . import spinner
 
-
-def spinner(arg):
-	x = [
-			"( ●    )",
-			"(  ●   )",
-			"(   ●  )",
-			"(    ● )",
-			"(     ●)",
-			"(    ● )",
-			"(   ●  )",
-			"(  ●   )",
-			"( ●    )",
-			"(●     )"
-	]
-	t = threading.currentThread()
-	while getattr(t, "do_run", True):
-		print(f'Executing {arg}........',x[0],end='\r')
-		x=x[1:]+[x[0]]
-		time.sleep(0.05)
-
-def disent_get(protocol,hostname_port,endpoint,uri_dict):
+def disent_get(uri_front,endpoint,uri_dict):
 		apikey = verify_secrets()
 		headers = {'Accept': 'application/json','Authorization': f'Api-Key {apikey}'}
 		uri_params = urllib_parse.urlencode(uri_dict)
-		url = f"{protocol}://{hostname_port}/{endpoint}?{uri_params}"
-		t = threading.Thread(target=spinner, args=(endpoint,))
-		t.start()
-		response = requests.request("GET", url, headers=headers)
-		t.do_run = False
+		url = f"{uri_front}/{endpoint}?{uri_params}"
 		
-		total_size_in_bytes= int(response.headers.get('content-length', 0))/1024
+		response = None
+		try:
+			t = threading.Thread(target=spinner.bouncing_ball, args=(endpoint,))
+			t.start()
+			response = requests.request("GET", url, headers=headers)
+			t.do_run = False		
+		except (KeyboardInterrupt,SystemExit,Exception):
+			t.do_run = False	
+			raise
+		
+		if response is None:
+			print('Reponse not found.')
 
-		print('Downloaded........',f"{round(total_size_in_bytes,0)}KiB done.")
-		
+		total_size_in_bytes= int(response.headers.get('content-length', 0))/1024
+		print('Downloaded........',f"{round(total_size_in_bytes,0)} KiB done.                ")
+
 		txt = response.text
 		
 		d = json.loads(txt)
@@ -84,30 +74,25 @@ def verify_secrets():
 	
 	return apikey
 
-def example(env='prod'):
+def example():
 	d = {'source':'BSPLINE_MODEL','ticker':'AAPL'}
-	result = disent('cache',d,env=env)
+	result = disent('cache',d)
 	return result
 
-def get_env_tuple(env):
-	d = settings.ENVS
-	result = d[env]
-	return result
-
-def disent(model,kwargs,env='prod'):
-	protocol, hostname_port = get_env_tuple(env)
+def disent(model,kwargs):
+	uri_front = environments.get_uri_left()
 	models = {
 		'cache':'api/cache'
 	}
 	model_endpoint = models[model]
-	result =  disent_get(protocol,hostname_port,model_endpoint,kwargs)
+	result =  disent_get(uri_front,model_endpoint,kwargs)
 	return result
 
-def hub(model,kwargs,env='prod'):
-	protocol, hostname_port = get_env_tuple(env)
+def hub(model,kwargs,):
+	uri_front = environments.get_uri_left()
 	kwargs['source']=model
 	model_endpoint='api/cache'
-	result =  disent_get(protocol,hostname_port,model_endpoint,kwargs)
+	result =  disent_get(uri_front,model_endpoint,kwargs)
 	return result
 
 
