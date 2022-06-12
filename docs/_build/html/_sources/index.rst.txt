@@ -145,6 +145,16 @@ Across the Disent platform rolling tenors include two helpers:
 
 - :math:`\text{IV}` is the implied volatlity. It is derived using a Disent-specific implementation of `Black-Scholes-Merton`_ using `spline-based interpolation`_.
 
+.. _click here: https://snpricer.disent.com/secondary/vol-surfaces
+
+.. figure:: source/vol_surf.gif
+   :align: center
+   :scale: 75 %
+   :alt: 3d Volatility Surface
+
+   Professional subcsribers can access the advanced features here (`click here`_).
+
+
 Portfolio Valuation
 -------------------------
 
@@ -159,7 +169,6 @@ Model integration
 **Use case** "I'm a PhD researcher, I have a proprietary model for my firm written in C++, I would like to integrate it to Disent so that it can be coupled with our market/static data and deployed to my users."
 
 *(todo) Coming soon*
-
 
 
 Scenario Analysis
