@@ -6,3 +6,6 @@ ENVS = {
 }
 
 ENV = 'public'
+
+DF_DATE_FORMAT = 'iso'
+DF_DATE_FORMAT = 'datetime64'

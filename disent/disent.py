@@ -59,12 +59,21 @@ def disent_get(endpoint,uri_dict):
 		result = d.get('result',None)
 		if result is None:
 			raise Exception('Server error',d['Exception'])
-			
-		df = pd.DataFrame(result)
-		return df
+
+		try:	
+			df = pd.DataFrame(result)
+			if settings.DF_DATE_FORMAT == 'datetime':
+				for c in df.columns:
+					if c.upper() in ['DT','DATE']:
+						df[c] = pd.to_datetime(df[c])
+			retValue = df
+		except:
+			retValue = result
+		
+		return retValue
 
 def fetch_temp_key(email):
-	reponse = requests.get(f'http://localhost:8000/api/keygen?email={email}')
+	reponse = requests.get(f'{env.get_uri_left}/api/keygen?email={email}')
 	d = json.loads(reponse.text)
 	if 'Result' in d:
 		key = d['Result']

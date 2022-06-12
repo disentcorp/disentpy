@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1 Quickstart &mdash; Disent Client (disentpy) 0.0.21 documentation</title>
+  <title>1 Quickstart &mdash; Disent Client (disentpy) 0.0.22 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -123,6 +123,7 @@
 <section id="market-data-retrieval">
 <h2><span class="sectnum">2.1 </span>Market Data Retrieval<a class="headerlink" href="#market-data-retrieval" title="Permalink to this heading">¶</a></h2>
 <p><strong>Use case</strong> “I’m a technologist at an asset manager, how can I pull modeled data out of Disent?”</p>
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/disentcorp/disentpy-notebooks.git/HEAD"><img alt="https://mybinder.org/badge_logo.svg" src="https://mybinder.org/badge_logo.svg" /></a>
 <p id="hub">When using <code class="code docutils literal notranslate"><span class="pre">disent.hub()</span></code> you’ll get a <code class="code docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;DEMO_EQD_VOLS&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ticker</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
@@ -202,7 +203,7 @@
 </table>
 <p>Across the Disent platform rolling tenors include two helpers:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{DT}s\)</span> are expressed as <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> strings as <span class="math notranslate nohighlight">\(\text{ACT}\)</span> days from today (<span class="math notranslate nohighlight">\(t_0\)</span>). Use <code class="code docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> for conversion. <span class="math notranslate nohighlight">\(\text{ACT}\)</span> is <span class="math notranslate nohighlight">\([t_0+T]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{DT}s\)</span> are expressed as <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> strings as <span class="math notranslate nohighlight">\(\text{ACT}\)</span> days from today (<span class="math notranslate nohighlight">\(t_0\)</span>). Use <code class="code docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> for conversion. <span class="math notranslate nohighlight">\(\text{ACT}\)</span> is <span class="math notranslate nohighlight">\([t_0+T]\)</span>.</p></li>
 </ul>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\text{YRS}s\)</span> are the year fractions from today and <span class="math notranslate nohighlight">\(\text{DT}\)</span> using <span class="math notranslate nohighlight">\(\text{ACT/365 Fixed}\)</span> <a class="reference external" href="https://en.wikipedia.org/wiki/Day_count_convention">convention</a>.</p></li>

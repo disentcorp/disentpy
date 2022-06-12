@@ -60,6 +60,9 @@ Market Data Retrieval
 
 **Use case** "I'm a technologist at an asset manager, how can I pull modeled data out of Disent?"
 
+.. image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/disentcorp/disentpy-notebooks.git/HEAD
+
 .. Observable market quotes
 .. ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -134,7 +137,7 @@ Across the Disent platform rolling tenors include two helpers:
 
 .. _ISO8601: https://en.wikipedia.org/wiki/ISO_8601
 
-- :math:`\text{DT}s` are expressed as `ISO8601`_ strings as :math:`\text{ACT}` days from today (:math:`t_0`). Use :code:`pandas.to_datetime()` for conversion. :math:`\text{ACT}` is :math:`[t_0+T]`
+- :math:`\text{DT}s` are expressed as `ISO8601`_ strings as :math:`\text{ACT}` days from today (:math:`t_0`). Use :code:`pandas.to_datetime()` for conversion. :math:`\text{ACT}` is :math:`[t_0+T]`. 
 
 .. _convention: https://en.wikipedia.org/wiki/Day_count_convention
 
