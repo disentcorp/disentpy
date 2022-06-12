@@ -73,8 +73,7 @@ def disent_get(endpoint,uri_dict):
 		return retValue
 
 def fetch_temp_key(email):
-	response = requests.get(f'{env.get_uri_left()
-	}/api/keygen?email={email}')
+	response = requests.get(f'{env.get_uri_left()}/api/keygen?email={email}')
 	d = json.loads(response.text)
 	if 'Result' in d:
 		key = d['Result']
