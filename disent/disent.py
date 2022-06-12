@@ -68,6 +68,7 @@ def verify_secrets():
 				
 	except FileNotFoundError:
 		print('Secrets file not found. See docs.')
+		print('')
 		apikey = input("Enter your API-Key to continue: ")
 		d = {'Api-Key':apikey}
 		with open(filename,'w') as f:

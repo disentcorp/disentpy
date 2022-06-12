@@ -10,8 +10,14 @@
    
 .. sectnum::
 
-Getting Started
+Welcome to the main page for the Disent client library. Currently supports Python3.8.x+
+
+Quickstart
 ==================
+
+.. _link: https://pypi.org/project/disentpy/
+
+Available on PyPi (`link`_) via :code:`pip`.
 
 .. code-block:: console
 
@@ -31,17 +37,28 @@ Getting Started
 
    [720 rows x 6 columns]
 
-When using :code:`disent.example()` you'll get a :code:`pandas.DataFrame` from Disent's demo volatility surface for Apple on recent data from the public domain. This is a wrapper on :code:`disent.hub`.
+When using :code:`disent.example()` you'll get a :code:`pandas.DataFrame` showing a modeled equity volatlity surface derived from public domain AAPL options chains. This is a wrapper on :ref:`disent.hub() <hub>`.
 
-Demo Functionality
+First time users will prompted for a key:
+
+.. code-block:: python3
+
+   >>> disent.example()
+   Secrets file not found. See docs.
+   Enter your API-Key to continue:
+
+See section on :ref:`keys <keys_section>`
+
+
+Tutorials
 ==================
 
-.. warning::
+The following walkthroughs will give users a flavor of Disent's API capabilities and built in analytics.
 
-   Data is provided for demonstration purposes and sourced from the public domain.
+Market Data Retrieval
+--------------------------
 
-Equity Volatility
-------------------
+**Use case** "I'm a technologist at an asset manager, how can I pull modeled data out of Disent?"
 
 .. Observable market quotes
 .. ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,6 +73,8 @@ Equity Volatility
 .. Normalized OTC surface
 .. ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _hub:
+
 When using :code:`disent.hub()` you'll get a :code:`pandas.DataFrame`:
 
 .. code:: python3
@@ -63,7 +82,7 @@ When using :code:`disent.hub()` you'll get a :code:`pandas.DataFrame`:
    >>> model="DEMO_EQD_VOLS"
    >>> ticker = 'AAPL'
    >>> model_args = {'ticker':ticker}
-   >>> df = disent.hub(model,model_args,env='disent-cloud')
+   >>> df = disent.hub(model,model_args)
 
 .. table::
    :align: center
@@ -126,17 +145,68 @@ Across the Disent platform rolling tenors include two helpers:
 
 - :math:`\text{IV}` is the implied volatlity. It is derived using a Disent-specific implementation of `Black-Scholes-Merton`_ using `spline-based interpolation`_.
 
+Portfolio Valuation
+-------------------------
 
-Environments
-==================
+**Use case** "I manage a book at a fund, how can I load my book into Disent and get an on-the-fly full revaluation?"
 
-Environment List
+*(todo) Coming soon*
+
+
+Model integration
+-------------------------
+
+**Use case** "I'm a PhD researcher, I have a proprietary model for my firm written in C++, I would like to integrate it to Disent so that it can be coupled with our market/static data and deployed to my users."
+
+*(todo) Coming soon*
+
+
+
+Scenario Analysis
+-------------------------
+
+**Use case** "I'm a trader executing a risk-neutral strategy, I need to simulate the P&L on my book based on what-if scenarios in the spot price of a variety of assets. I'll use the results as part of planning my hedging.""
+
+*(todo) Coming soon*
+
+Price an Exotic
+-------------------------
+
+**Use case** "I'm on the phone with a client/dealer and we're going back and forth on the price of a basket option. I want to pay around with the pricing parameters to try and see where a good level to close may be."
+
+*(todo) Coming soon*
+
+Backtest a Strategy
+-------------------------
+
+**Use case** "I'm in sales and a new client is asking for a specific type of enhanced yield. I want to impress, so let's search out a strategy that makes money 99% of the time."
+
+*(todo) Coming soon*
+
+
+Auth and Envs
+=====================
+
+This section details how to request keys for application authentification as well as facilities for selecting which environments data is coming from (local/dev/prod, etc..).
+
+.. _keys_section:
+
+Authentification keys
+----------------------
+
+.. _publickey@disent.com: mailto://publickeys@disent.com
+.. _support@disent.com: mailto://support@disent.com
+
+- **Public users** request a public key via email to `publickey@disent.com`_. Next release will have the ability to generate on-the-fly.
+- **Subscribers** see private documentation or contact `support@disent.com`_.
+
+Environment selection
 ------------------
 
 * public (default)
 
 List current environment
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python3
 
@@ -144,13 +214,18 @@ List current environment
    public
 
 Change (set) environment
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python3
 
    >>> disent.set.set('prod')
    public --> prod
 
+
+API Reference
+========================
+
+*(todo) Coming soon*
 
 .. * :ref:`genindex`
 .. * :ref:`modindex`
