@@ -26,7 +26,7 @@ author = 'Anthony Malizzio'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.0.23'
+release = '0.0.24'
 
 
 # -- General configuration ---------------------------------------------------

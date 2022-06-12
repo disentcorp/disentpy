@@ -7,7 +7,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='disentpy',
-    version='0.0.23',
+    version='0.0.24',
     description='Disent API caller',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -16,6 +16,6 @@ setup(
     author_email='niels.lauritzen@disent.com',
     license_files = ('LICENSE.md',),
     packages=['disent'],
-    install_requires=['requests'],
+    install_requires=['requests','pandas','numpy'],
     zip_safe=False
 )
