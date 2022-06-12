@@ -39,7 +39,7 @@ def disent_get(endpoint,uri_dict):
 				raise
 			
 			if response is None:
-				print('Reponse not found.')
+				print('Response not found.')
 
 			total_size_in_bytes= int(response.headers.get('content-length', 0))/1024
 			print('Downloaded........',f"{round(total_size_in_bytes,0)} KiB done.                ")
@@ -73,8 +73,8 @@ def disent_get(endpoint,uri_dict):
 		return retValue
 
 def fetch_temp_key(email):
-	reponse = requests.get(f'{env.get_uri_left}/api/keygen?email={email}')
-	d = json.loads(reponse.text)
+	response = requests.get(f'{env.get_uri_left}/api/keygen?email={email}')
+	d = json.loads(response.text)
 	if 'Result' in d:
 		key = d['Result']
 		return key

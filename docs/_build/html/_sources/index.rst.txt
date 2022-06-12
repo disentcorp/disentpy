@@ -10,9 +10,9 @@
    
 .. sectnum::
 
-Welcome to the main page for the Disent client library. Currently supports Python3.8.x+. Docs presume familiary with basic python, pandas, numpy, and derivatives 🤑.
+Welcome to the main page for the Disent client library. Currently supports Python3.8.x+. Docs presume familiarly with basic python, pandas, numpy , and derivatives. 🤓&🤑.
 
-Quickstart
+Quick-start
 ==================
 
 .. _link: https://pypi.org/project/disentpy/
@@ -37,7 +37,7 @@ Available on PyPi (`link`_) via :code:`pip`.
 
    [720 rows x 6 columns]
 
-When using :code:`disent.example()` you'll get a :code:`pandas.DataFrame` showing a modeled equity volatlity surface derived from public domain AAPL options chains. This is a wrapper on :ref:`disent.hub() <hub>`.
+When using :code:`disent.example()` you'll get a :code:`pandas.DataFrame` showing a modeled equity volatility surface derived from public domain AAPL options chains. This is a wrapper on :ref:`disent.hub() <hub>`.
 
 First time users will prompted for a key:
 
@@ -144,12 +144,12 @@ Across the Disent platform rolling tenors include two helpers:
 - :math:`\text{YRS}s` are the year fractions from today and :math:`\text{DT}` using :math:`\text{ACT/365 Fixed}` `convention`_.
 
 
-*Evalauted columns*
+*Evaluated columns*
 
 .. _Black-Scholes-Merton: https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model
 .. _spline-based interpolation: https://en.wikipedia.org/wiki/Spline_interpolation
 
-- :math:`\text{IV}s` is the implied volatlity. It is derived using a Disent-specific implementation of `Black-Scholes-Merton`_ using `spline-based interpolation`_.
+- :math:`\text{IV}s` is the implied volatility. It is derived using a Disent-specific implementation of `Black-Scholes-Merton`_ using `spline-based interpolation`_.
 
 .. _click here: https://snpricer.disent.com/secondary/vol-surfaces
 
@@ -158,7 +158,7 @@ Across the Disent platform rolling tenors include two helpers:
    :scale: 75 %
    :alt: 3d Volatility Surface
 
-   Professional subcsribers can access the advanced features here (`click here`_).
+   Professional subscribers can access the advanced features here (`click here`_).
 
 
 Portfolio Valuation
@@ -191,7 +191,7 @@ Price an Exotic
 
 *(todo) Coming soon*
 
-Backtest a Strategy
+Back-test a Strategy
 -------------------------
 
 **Use case** "I'm in sales and a new client is asking for a specific type of enhanced yield. I want to impress, so let's search out a strategy that makes money 99% of the time."
@@ -202,11 +202,11 @@ Backtest a Strategy
 Auth and Envs
 =====================
 
-This section details how to request keys for application authentification as well as facilities for selecting which environments data is coming from (local/dev/prod, etc..).
+This section details how to request keys for application authentication as well as facilities for selecting which environments data is coming from (local/dev/prod, etc..).
 
 .. _keys_section:
 
-Authentification keys
+Authentication keys
 ----------------------
 
 .. _publickey@disent.com: mailto://publickeys@disent.com
@@ -216,7 +216,7 @@ Authentification keys
 - **Subscribers** see private documentation or contact `support@disent.com`_.
 
 Environment selection
-------------------
+------------------------
 
 * public (default)
 
