@@ -1,6 +1,7 @@
 
 import io
 import os
+import re
 import sys
 import urllib.parse as urllib_parse
 import json
@@ -18,31 +19,43 @@ from . import env
 from . import spinner
 
 def disent_get(endpoint,uri_dict):
-		apikey = verify_secrets()
-		headers = {'Accept': 'application/json','Authorization': f'Api-Key {apikey}'}
-		uri_params = urllib_parse.urlencode(uri_dict)
-		uri_front = env.get_uri_left()
-		url = f"{uri_front}/{endpoint}?{uri_params}"
-		
-		response = None
-		try:
-			t = threading.Thread(target=spinner.bouncing_ball, args=(endpoint,))
-			t.start()
-			response = requests.request("GET", url, headers=headers)
-			t.do_run = False		
-		except (KeyboardInterrupt,SystemExit,Exception):
-			t.do_run = False	
-			raise
-		
-		if response is None:
-			print('Reponse not found.')
+		verified = False
+		isDeleted = False
+		while not verified:
+			apikey = verify_secrets(isDeleted=isDeleted)
+			headers = {'Accept': 'application/json','Authorization': f'Api-Key {apikey}'}
+			uri_params = urllib_parse.urlencode(uri_dict)
+			uri_front = env.get_uri_left()
+			url = f"{uri_front}/{endpoint}?{uri_params}"
+			
+			response = None
+			try:
+				t = threading.Thread(target=spinner.bouncing_ball, args=(endpoint,))
+				t.start()
+				response = requests.request("GET", url, headers=headers)
+				t.do_run = False		
+			except (KeyboardInterrupt,SystemExit,Exception):
+				t.do_run = False	
+				raise
+			
+			if response is None:
+				print('Reponse not found.')
 
-		total_size_in_bytes= int(response.headers.get('content-length', 0))/1024
-		print('Downloaded........',f"{round(total_size_in_bytes,0)} KiB done.                ")
+			total_size_in_bytes= int(response.headers.get('content-length', 0))/1024
+			print('Downloaded........',f"{round(total_size_in_bytes,0)} KiB done.                ")
 
-		txt = response.text
-		
-		d = json.loads(txt)
+			txt = response.text
+			
+			d = json.loads(txt)
+			if 'Error' in d:
+				if 'Authentication' in d['Error']:
+					verify_secrets(removeKey=True)
+					isDeleted=True
+				else:
+					raise Exception('Error','Unhandled server error. Please try again.')
+			elif 'result' in d:
+				verified = True
+
 		result = d.get('result',None)
 		if result is None:
 			raise Exception('Server error',d['Exception'])
@@ -50,11 +63,25 @@ def disent_get(endpoint,uri_dict):
 		df = pd.DataFrame(result)
 		return df
 
-def verify_secrets():
+def fetch_temp_key(email):
+	reponse = requests.get(f'http://localhost:8000/api/keygen?email={email}')
+	d = json.loads(reponse.text)
+	if 'Result' in d:
+		key = d['Result']
+		return key
+	else:
+		raise Exception('Error','Error in generating temp key. Contact support@disent.com.')
+
+
+def verify_secrets(removeKey=False,isDeleted=False):
 	dir = os.path.join(os.path.expanduser('~'),'.disent')
 	if not os.path.isdir(dir):
 		os.makedirs(dir, exist_ok=True)
 	filename = os.path.join(dir,APIKEY_FILENAME)
+
+	if removeKey:
+		os.remove(filename)
+		return 
 
 	try:
 		with open(filename) as f:
@@ -67,9 +94,24 @@ def verify_secrets():
 				raise Exception('Error','Secrets file is invalid.')
 				
 	except FileNotFoundError:
-		print('Secrets file not found. See docs.')
+		if isDeleted:
+			print('\nSupplied key is not valid. See docs.')
+		else:
+			print('\nKey not found. See docs.')
 		print('')
-		apikey = input("Enter your API-Key to continue: ")
+		choice = input('Do you have a permanent key (1) or would like you to request a temporary key (2): ')
+		if choice == '1':
+			apikey = input("Enter your key to continue: ")
+		if choice == '2':
+			notValid = True
+			while notValid:
+				email = input("Please provide a valid email address: ")
+				regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+				if re.fullmatch(regex, email):
+					apikey = fetch_temp_key(email)
+					notValid = False
+				else:
+					print('Invalid email. Try again.')
 		d = {'Api-Key':apikey}
 		with open(filename,'w') as f:
 			json.dump(d,f)

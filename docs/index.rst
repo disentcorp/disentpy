@@ -10,7 +10,7 @@
    
 .. sectnum::
 
-Welcome to the main page for the Disent client library. Currently supports Python3.8.x+
+Welcome to the main page for the Disent client library. Currently supports Python3.8.x+. Docs presume familiary with basic python, pandas, numpy, and derivatives 🤑.
 
 Quickstart
 ==================
@@ -83,6 +83,7 @@ When using :code:`disent.hub()` you'll get a :code:`pandas.DataFrame`:
    >>> ticker = 'AAPL'
    >>> model_args = {'ticker':ticker}
    >>> df = disent.hub(model,model_args)
+   >>> df
 
 .. table::
    :align: center
@@ -113,11 +114,11 @@ When using :code:`disent.hub()` you'll get a :code:`pandas.DataFrame`:
 
 .. _OCC: https://www.theocc.com/Market-Data/Market-Data-Reports/Series-and-Trading-Data/Directory-of-Listed-Products
   
-- :math:`\text{TCK}` are the option contract root symbols using standard exchange root codes (`OCC`_) root symbols.
+- :math:`\text{TCK}s` are the option contract root symbols using standard exchange root codes (`OCC`_) root symbols.
 
-- :math:`\text{MNY}` are defined as :math:`f(S,K) = \displaystyle\frac{K}{S}` bucketed into a pre-defined moneyness scale.
+- :math:`\text{MNY}s` are defined as :math:`f(S,K) = \displaystyle\frac{K}{S}` bucketed into a pre-defined moneyness scale.
 
-- :math:`\text{T}` are rolling contract maturities, i.e. durations/tenors/time periods (akin to :code:`datetime.timedelta`), bucketed into a classic tenor scale:
+- :math:`\text{T}s` are rolling contract maturities, i.e. durations/tenors/time periods (akin to :code:`datetime.timedelta`), bucketed into a classic tenor scale:
 
 .. list-table::
    :align: center
@@ -133,9 +134,11 @@ Across the Disent platform rolling tenors include two helpers:
 
 .. _ISO8601: https://en.wikipedia.org/wiki/ISO_8601
 
-- :math:`\text{DT}` are expressed as `ISO8601`_ strings as :math:`\text{ACT}` days from today. Use :code:`pandas.to_datetime()` for conversion.
+- :math:`\text{DT}s` are expressed as `ISO8601`_ strings as :math:`\text{ACT}` days from today (:math:`t_0`). Use :code:`pandas.to_datetime()` for conversion. :math:`\text{ACT}` is :math:`[t_0+T]`
 
-- :math:`\text{YRS}` are the year fractions from today and :math:`\text{DT}` using :math:`\text{ACT/365}` convention.
+.. _convention: https://en.wikipedia.org/wiki/Day_count_convention
+
+- :math:`\text{YRS}s` are the year fractions from today and :math:`\text{DT}` using :math:`\text{ACT/365 Fixed}` `convention`_.
 
 
 *Evalauted columns*
@@ -143,7 +146,7 @@ Across the Disent platform rolling tenors include two helpers:
 .. _Black-Scholes-Merton: https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model
 .. _spline-based interpolation: https://en.wikipedia.org/wiki/Spline_interpolation
 
-- :math:`\text{IV}` is the implied volatlity. It is derived using a Disent-specific implementation of `Black-Scholes-Merton`_ using `spline-based interpolation`_.
+- :math:`\text{IV}s` is the implied volatlity. It is derived using a Disent-specific implementation of `Black-Scholes-Merton`_ using `spline-based interpolation`_.
 
 .. _click here: https://snpricer.disent.com/secondary/vol-surfaces
 

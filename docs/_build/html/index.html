@@ -88,7 +88,7 @@
              
   <div class="toctree-wrapper compound">
 </div>
-<p>Welcome to the main page for the Disent client library. Currently supports Python3.8.x+</p>
+<p>Welcome to the main page for the Disent client library. Currently supports Python3.8.x+. Docs presume familiary with basic python, pandas, numpy, and derivatives 🤑.</p>
 <section id="quickstart">
 <h1><span class="sectnum">1 </span>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading">¶</a></h1>
 <p>Available on PyPi (<a class="reference external" href="https://pypi.org/project/disentpy/">link</a>) via <code class="code docutils literal notranslate"><span class="pre">pip</span></code>.</p>
@@ -128,6 +128,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ticker</span> <span class="o">=</span> <span class="s1">&#39;AAPL&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ticker&#39;</span><span class="p">:</span><span class="n">ticker</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">disent</span><span class="o">.</span><span class="n">hub</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="n">model_args</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
 </pre></div>
 </div>
 <table class="docutils align-center">
@@ -184,9 +185,9 @@
 </div>
 <p><em>Descriptive columns</em></p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{TCK}\)</span> are the option contract root symbols using standard exchange root codes (<a class="reference external" href="https://www.theocc.com/Market-Data/Market-Data-Reports/Series-and-Trading-Data/Directory-of-Listed-Products">OCC</a>) root symbols.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{MNY}\)</span> are defined as <span class="math notranslate nohighlight">\(f(S,K) = \displaystyle\frac{K}{S}\)</span> bucketed into a pre-defined moneyness scale.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{T}\)</span> are rolling contract maturities, i.e. durations/tenors/time periods (akin to <code class="code docutils literal notranslate"><span class="pre">datetime.timedelta</span></code>), bucketed into a classic tenor scale:</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{TCK}s\)</span> are the option contract root symbols using standard exchange root codes (<a class="reference external" href="https://www.theocc.com/Market-Data/Market-Data-Reports/Series-and-Trading-Data/Directory-of-Listed-Products">OCC</a>) root symbols.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{MNY}s\)</span> are defined as <span class="math notranslate nohighlight">\(f(S,K) = \displaystyle\frac{K}{S}\)</span> bucketed into a pre-defined moneyness scale.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{T}s\)</span> are rolling contract maturities, i.e. durations/tenors/time periods (akin to <code class="code docutils literal notranslate"><span class="pre">datetime.timedelta</span></code>), bucketed into a classic tenor scale:</p></li>
 </ul>
 <table class="docutils align-center">
 <tbody>
@@ -201,12 +202,14 @@
 </table>
 <p>Across the Disent platform rolling tenors include two helpers:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{DT}\)</span> are expressed as <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> strings as <span class="math notranslate nohighlight">\(\text{ACT}\)</span> days from today. Use <code class="code docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> for conversion.</p></li>
-<li><p><span class="math notranslate nohighlight">\(\text{YRS}\)</span> are the year fractions from today and <span class="math notranslate nohighlight">\(\text{DT}\)</span> using <span class="math notranslate nohighlight">\(\text{ACT/365}\)</span> convention.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{DT}s\)</span> are expressed as <a class="reference external" href="https://en.wikipedia.org/wiki/ISO_8601">ISO8601</a> strings as <span class="math notranslate nohighlight">\(\text{ACT}\)</span> days from today (<span class="math notranslate nohighlight">\(t_0\)</span>). Use <code class="code docutils literal notranslate"><span class="pre">pandas.to_datetime()</span></code> for conversion. <span class="math notranslate nohighlight">\(\text{ACT}\)</span> is <span class="math notranslate nohighlight">\([t_0+T]\)</span></p></li>
+</ul>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\text{YRS}s\)</span> are the year fractions from today and <span class="math notranslate nohighlight">\(\text{DT}\)</span> using <span class="math notranslate nohighlight">\(\text{ACT/365 Fixed}\)</span> <a class="reference external" href="https://en.wikipedia.org/wiki/Day_count_convention">convention</a>.</p></li>
 </ul>
 <p><em>Evalauted columns</em></p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\text{IV}\)</span> is the implied volatlity. It is derived using a Disent-specific implementation of <a class="reference external" href="https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model">Black-Scholes-Merton</a> using <a class="reference external" href="https://en.wikipedia.org/wiki/Spline_interpolation">spline-based interpolation</a>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{IV}s\)</span> is the implied volatlity. It is derived using a Disent-specific implementation of <a class="reference external" href="https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model">Black-Scholes-Merton</a> using <a class="reference external" href="https://en.wikipedia.org/wiki/Spline_interpolation">spline-based interpolation</a>.</p></li>
 </ul>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="_images/vol_surf.gif"><img alt="3d Volatility Surface" src="_images/vol_surf.gif" style="width: 450.0px; height: 253.5px;" /></a>
