@@ -39,13 +39,14 @@ Available on PyPi (`link`_) via :code:`pip`.
 
 When using :code:`disent.example()` you'll get a :code:`pandas.DataFrame` showing a modeled equity volatility surface derived from public domain AAPL options chains. This is a wrapper on :ref:`disent.hub() <hub>`.
 
-First time users will prompted for a key:
+First time users will prompted for a security key:
 
 .. code-block:: python3
 
    >>> disent.example()
-   Secrets file not found. See docs.
-   Enter your API-Key to continue:
+   Key not found. See docs.
+
+   Do you have a permanent key (1) or would like you to request a temporary key (2):
 
 See section on :ref:`keys <keys_section>`
 
@@ -212,8 +213,8 @@ Authentication keys
 .. _publickey@disent.com: mailto://publickeys@disent.com
 .. _support@disent.com: mailto://support@disent.com
 
-- **Public users** request a public key via email to `publickey@disent.com`_. Next release will have the ability to generate on-the-fly.
-- **Subscribers** see private documentation or contact `support@disent.com`_.
+- **Public users** can generate generate keys to run the tutorials by entering their email address. We value your feedback!!!! Email us `publickey@disent.com`_.
+- **Professional subscribers** see private documentation, call your rep, or just email us `support@disent.com`_.
 
 Environment selection
 ------------------------
