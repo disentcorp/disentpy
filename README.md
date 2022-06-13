@@ -4,7 +4,7 @@
 
 **disentpy** is the python client for the [Disent](http://www.disent.com) platform.
 
-Please [read the docs](https://disentpy.readthedocs.io/en/latest/) for tutorials and more information.
+Please [read the docs](https://disentpy.readthedocs.io/en/latest/) for **tutorials** and more information.
 
 ## Install
 
